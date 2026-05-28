@@ -1,0 +1,6 @@
+{
+  "name": "Sistem Procurement Rumah Sakit",
+  "description": "Aplikasi pengadaan barang (procurement) rumah sakit yang terdiri dari manajemen SKU Master dan pembuatan Purchase Requisition (PR), lengkap dengan relasi vendor dan peringatan stok minimum.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
