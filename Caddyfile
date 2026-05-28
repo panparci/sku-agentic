@@ -1,0 +1,17 @@
+# SKU Rumah Sakit EPS - Caddy Reverse Proxy
+
+# API Backend
+api.sku-rumahsakit.io {
+    reverse_proxy localhost:8080
+    header Access-Control-Allow-Origin "*"
+}
+
+# Frontend (when built)
+sku-rumahsakit.io {
+    reverse_proxy localhost:3000
+}
+
+# Health check
+health.sku-rumahsakit.io {
+    reverse_proxy localhost:8080/health
+}
