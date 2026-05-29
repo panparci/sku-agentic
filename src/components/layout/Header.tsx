@@ -2,17 +2,20 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
+import React from "react";
+import { Activity, AlertTriangle, FileCheck, Package } from "lucide-react";
+import { useProcurement } from "../../context/ProcurementContext";
 
-import { Activity, AlertTriangle, FileCheck, Package } from 'lucide-react';
-import { useProcurement } from '../../context/ProcurementContext';
+interface HeaderProps {
+  onLogout: () => void;
+}
 
-export function Header() {
+export function Header({ onLogout }: HeaderProps) {
   const { skus, criticalStockCount, pendingPrCount } = useProcurement();
 
   return (
     <header className="bg-slate-900 text-white shadow-md border-b border-teal-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4">
-
         <div className="flex items-center gap-3">
           <div className="bg-gradient-to-tr from-teal-500 to-emerald-400 p-2 rounded-lg text-slate-950 shadow">
             <Activity className="h-6 w-6 stroke-[3]" />
@@ -23,44 +26,46 @@ export function Header() {
                 RS Medika Utama Procurement
               </span>
               <span className="bg-teal-900/80 border border-teal-500/30 text-teal-300 text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full">
-                Admin & Logistik
+                Admin &amp; Logistik
               </span>
             </div>
             <p className="text-xs text-slate-400">
-              Sistem Pengendalian Logistik & Draf Pengadaan Barang Rumah Sakit
+              Sistem Pengendalian Logistik &amp; Draf Pengadaan Barang Rumah Sakit
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 text-center md:text-right">
-          <MetricChip
-            icon={<Package className="h-4 w-4 text-slate-400 shrink-0" />}
-            label="Total SKU"
-            value={skus.length}
-            valueClass="text-teal-400"
-          />
-          <MetricChip
-            icon={
-              <AlertTriangle
-                className={`h-4 w-4 ${
-                  criticalStockCount > 0
-                    ? 'text-amber-400 animate-pulse'
-                    : 'text-slate-400'
-                } shrink-0`}
-              />
-            }
-            label="Kritis"
-            value={criticalStockCount}
-            valueClass={
-              criticalStockCount > 0 ? 'text-amber-400' : 'text-slate-400'
-            }
-          />
-          <MetricChip
-            icon={<FileCheck className="h-4 w-4 text-emerald-400 shrink-0" />}
-            label="Antrean PR"
-            value={pendingPrCount}
-            valueClass="text-emerald-400"
-          />
+        <div className="flex items-center gap-4">
+          <div className="grid grid-cols-3 gap-2 text-center md:text-right">
+            <MetricChip
+              icon={<Package className="h-4 w-4 text-slate-400 shrink-0" />}
+              label="Total SKU"
+              value={skus.length}
+              valueClass="text-teal-400"
+            />
+            <MetricChip
+              icon={
+                <AlertTriangle
+                  className={`h-4 w-4 ${criticalStockCount > 0 ? "text-amber-400 animate-pulse" : "text-slate-400"} shrink-0`}
+                />
+              }
+              label="Kritis"
+              value={criticalStockCount}
+              valueClass={criticalStockCount > 0 ? "text-amber-400" : "text-slate-400"}
+            />
+            <MetricChip
+              icon={<FileCheck className="h-4 w-4 text-emerald-400 shrink-0" />}
+              label="Antrean PR"
+              value={pendingPrCount}
+              valueClass="text-emerald-400"
+            />
+          </div>
+          <button
+            onClick={onLogout}
+            className="bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold px-3 py-2 rounded-lg border border-slate-600 transition-colors"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </header>

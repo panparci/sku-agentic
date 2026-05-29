@@ -76,6 +76,14 @@ func Server() {
 		response.SuccessMsg(c, "OK")
 	})
 
+	// Serve static frontend files
+	router.Static("/assets", "./dist/assets")
+
+	// SPA fallback — serve index.html for non-API routes
+	router.NoRoute(func(c *gin.Context) {
+		c.File("./dist/index.html")
+	})
+
 	// Public routes
 	router.POST("/api/v1/auth/login", authHandler.Login)
 	router.POST("/api/v1/auth/logout", authHandler.Logout)

@@ -158,3 +158,28 @@ func (r *SupabaseRepository) Delete(table string, id string) error {
 	}
 	return nil
 }
+
+func (r *SupabaseRepository) RPC(funcName string, params map[string]any) ([]map[string]any, error) {
+	path := fmt.Sprintf("/rest/v1/rpc/%s", funcName)
+	jsonParams, _ := json.Marshal(params)
+	body, status, err := r.doRequest(context.Background(), "POST", path, string(jsonParams), false)
+	if err != nil {
+		return nil, err
+	}
+	if status != 200 && status != 201 {
+		return nil, fmt.Errorf("rpc %s failed: status %d, body: %s", funcName, status, string(body))
+	}
+	if len(body) > 0 && body[0] == '[' {
+		var result []map[string]any
+		if err := json.Unmarshal(body, &result); err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+	// Single object
+	var result []map[string]any
+	if err := json.Unmarshal(body, &result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}

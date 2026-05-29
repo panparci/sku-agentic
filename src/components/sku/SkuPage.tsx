@@ -12,7 +12,7 @@ import { SkuFormModal } from './SkuFormModal';
 import { SkuTable } from './SkuTable';
 
 export function SkuPage() {
-  const { skus, vendors, toggleSkuStatus } = useProcurement();
+  const { skus, vendors, toggleSkuStatus, loading } = useProcurement();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
@@ -66,6 +66,14 @@ export function SkuPage() {
           stockFilter={stockFilter}
           onStockFilterChange={setStockFilter}
         />
+        {loading && (
+          <div className="p-8 text-center text-slate-500">
+            <div className="animate-spin w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full inline-block mb-2"></div>
+            <p>Memuat data SKU...</p>
+          </div>
+        )}
+
+
 
         <SkuTable
           skus={filteredSkus}

@@ -181,7 +181,7 @@ func (s *SKUService) DeleteSKU(ctx context.Context, id string) error {
 }
 
 func (s *SKUService) GetCriticalStock(ctx context.Context) ([]model.SKU, error) {
-	rows, err := s.repo.List("skus", "select=*&current_stock=lt.minimum_stock&status=eq.Aktif")
+	rows, err := s.repo.RPC("get_critical_stock_skus", nil)
 	if err != nil {
 		return nil, err
 	}
