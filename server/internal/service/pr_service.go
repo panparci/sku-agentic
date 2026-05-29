@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -155,9 +154,9 @@ func (s *PRService) UpdatePRStatus(ctx context.Context, id string, req model.Upd
 }
 
 func (s *PRService) DeletePR(ctx context.Context, id string) error {
-	// Delete items first
-	_, err := s.repo.repo.Exec(context.Background(), "DELETE FROM pr_items WHERE pr_id = "+id)
-	// Best effort
+	// Delete items first (best effort)
+	s.repo.Delete("pr_items", "pr_id=eq."+id)
+	// Delete PR
 	s.repo.Delete("purchase_requisitions", id)
 	s.invalidateCache(ctx)
 	return nil

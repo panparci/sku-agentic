@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS purchase_requisitions (
 CREATE TABLE IF NOT EXISTS pr_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     pr_id UUID REFERENCES purchase_requisitions(id) ON DELETE CASCADE,
-    sku_id UUID REFERENCES skus(id),
+    sku_id UUID REFERENCES skus(sku_id),
     qty INTEGER NOT NULL CHECK (qty > 0),
     unit_price DECIMAL(15,2) NOT NULL DEFAULT 0,
     total_price DECIMAL(15,2) NOT NULL DEFAULT 0,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS purchase_orders (
 CREATE TABLE IF NOT EXISTS po_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     po_id UUID REFERENCES purchase_orders(id) ON DELETE CASCADE,
-    sku_id UUID REFERENCES skus(id),
+    sku_id UUID REFERENCES skus(sku_id),
     qty INTEGER NOT NULL CHECK (qty > 0),
     unit_price DECIMAL(15,2) NOT NULL DEFAULT 0,
     total_price DECIMAL(15,2) NOT NULL DEFAULT 0
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS goods_receipts (
 CREATE TABLE IF NOT EXISTS grn_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     grn_id UUID REFERENCES goods_receipts(id) ON DELETE CASCADE,
-    sku_id UUID REFERENCES skus(id),
+    sku_id UUID REFERENCES skus(sku_id),
     qty_ordered INTEGER NOT NULL,
     qty_received INTEGER NOT NULL,
     batch_number TEXT,

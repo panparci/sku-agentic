@@ -26,7 +26,7 @@ type Env struct {
 }
 
 func NewEnv() *Env {
-	viper.SetConfigFile(".env")
+	viper.SetConfigFile("/home/ubuntu/workspace/sku-agentic/server/.env")
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
@@ -36,14 +36,14 @@ func NewEnv() *Env {
 	env := &Env{
 		ServerPort:         8080,
 		GoMode:             "debug",
-		SupabaseURL:        getEnv("SUPABASE_URL", "https://maiofshijggzbgjtojus.supabase.co"),
-		SupabaseAnonKey:    getEnv("SUPABASE_ANON_KEY", ""),
-		SupabaseServiceKey: getEnv("SUPABASE_SERVICE_ROLE_KEY", ""),
-		RedisHost:          getEnv("REDIS_HOST", "localhost"),
+		SupabaseURL:        viper.GetString("SUPABASE_URL"),
+		SupabaseAnonKey:    viper.GetString("SUPABASE_ANON_KEY"),
+		SupabaseServiceKey: viper.GetString("SUPABASE_SERVICE_ROLE_KEY"),
+		RedisHost:          viper.GetString("REDIS_HOST"),
 		RedisPort:          6379,
-		RedisPwd:           getEnv("REDIS_PASSWORD", ""),
+		RedisPwd:           viper.GetString("REDIS_PASSWORD"),
 		RedisDB:            0,
-		JWTSecret:          getEnv("JWT_SECRET", "sku-rumahsakit-secret-change-in-production"),
+		JWTSecret:          viper.GetString("JWT_SECRET"),
 		AccessTokenExpiry:  3600,
 		RefreshTokenExpiry: 604800,
 	}

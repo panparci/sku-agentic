@@ -152,3 +152,7 @@ func getStringFromAny(v any) string {
 	}
 	return ""
 }
+
+func (s *AuthService) DebugQuery() ([]map[string]any, error) {
+	return s.repo.List("users", "email=eq.admin@rs-medika.com&limit=1")
+}

@@ -79,6 +79,16 @@ func Server() {
 	// Public routes
 	router.POST("/api/v1/auth/login", authHandler.Login)
 	router.POST("/api/v1/auth/logout", authHandler.Logout)
+	// Debug endpoint - direct query test
+	router.GET("/debug/env", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"supabase_url": env.SupabaseURL,
+			"anon_key_len": len(env.SupabaseAnonKey),
+			"service_key_len": len(env.SupabaseServiceKey),
+			"jwt_secret_len": len(env.JWTSecret),
+		})
+	})
+
 
 	// Protected routes
 	api := router.Group("/api/v1")
